@@ -1,41 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>Vulnerable Neighborhood Explorer</title>
 
 	<script src="data/GEO_CONFIG.js"></script>
 	<script src="data/GEO_JSON.js"></script>
 	<script src="data/GEO_VARIABLES.js"></script>
 
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/jQuery/jquery-3.3.1.js"></script>
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/d3/d3.min.js"></script>
-	<!--script src="lib/d3-chord-diagrams-master/lib/d3.js"></script-->
-	<!--script src="lib/d3-chord-diagrams-master/lib/underscore.js"></script>
-	<script src="lib/d3-chord-diagrams-master/js/mapper.js"></script-->
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/moment/moment.min.js"></script>
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/geostats/geostats.min.js"></script>
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/simple-statistics@6.0.0/simple-statistics.min.js"></script>
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/leaflet/leaflet.js"></script>
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/sweetalert/sweetalert.min.js"></script>
-	<!--script src="../template/Neighborhood_Analysis_Mapper/lib/plotly.js v1.39.4/plotly.min.js"></script-->
-	<!--script src="https://cdn.plot.ly/plotly-latest.min.js"></script-->
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/plotly.js-1.49.1/plotly.js"></script>
+	<script
+		src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/jQuery/jquery-3.3.1.js"></script>
+	<script src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/d3/d3.min.js"></script>
+	<script src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/moment/moment.min.js"></script>
+	<script
+		src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/geostats/geostats.min.js"></script>
+	<script
+		src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/simple-statistics@6.0.0/simple-statistics.min.js"></script>
+	<script src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/leaflet/leaflet.js"></script>
+	<script
+		src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/sweetalert/sweetalert.min.js"></script>
+	<script
+		src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/plotly.js-1.49.1/plotly.js"></script>
+	<script
+		src="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/science.js-master/science.v1.min.js"></script>
+	<link rel="stylesheet"
+		href="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/lib/leaflet/leaflet.css" />
+	<link rel="stylesheet"
+		href="http://wherecovid19.cigi.illinois.edu/Neighborhood_Analysis_Mapper/css/Neighborhood_Analysis_Mapper.css" />
+	<link rel="stylesheet" href="..template/Neighborhood_Analysis_Mapper/css/style.css" />
 
-	<!--script src="../template/Neighborhood_Analysis_Mapper/lib/pyextjs-0.1.2/package/dist/ss.js"></script>
-	<script src="../template/Neighborhood_Analysis_Mapper/lib/pyextjs-0.1.2/package/dist/Numpy.js"></script>
-	<script src="../template/Neighborhood_Analysis_Mapper/lib/pyextjs-0.1.2/package/dist/PolySolve.js"></script>
-	<script src="../template/Neighborhood_Analysis_Mapper/lib/pyextjs-0.1.2/package/dist/Scipy.js"></script-->
-
-	<!--script src="lib/PyExtJS-master/dist/ss.js"></script>
-	<script src="lib/PyExtJS-master/dist/Numpy.js"></script>
-	<script src="lib/PyExtJS-master/dist/PolySolve.js"></script>
-	<script src="lib/PyExtJS-master/dist/Scipy.js"></script-->
-	<script src="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/science.js-master/science.v1.min.js"></script>
-
-	<link rel="stylesheet" href="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/lib/leaflet/leaflet.css" />
-	<link rel="stylesheet" href="http://su-gis.iptime.org/GEOSNAP/template/Neighborhood_Analysis_Mapper/css/Neighborhood_Analysis_Mapper.css" />
-	<!--script src="lib/Neighborhood_Analysis_Mapper.js"></script-->
 
 	<style>
 		#tooltip {
@@ -123,7 +116,7 @@ var SUBJECT_PREFIX = " "                         // prefix of subject as like " 
 var getNow = function() { return moment().format('HH:mm:ss.SSS '); };
 var CA = null;
 var app={
-	adjustBound: 0.25,                           // ratio to reduce rectangle size of intial bounds
+	adjustBound: 0.2,                           // ratio to reduce rectangle size of intial bounds
 	maxZoom: 14,
 	m: 5,                                        // number of the maps in a web page shown
 	d: 5,                                        // number of the density charts in a web page shown
@@ -154,6 +147,7 @@ var app={
 	subjectName: "Subject",                      // subject name from configuration file (default: "Subject")
 	InitialMapCenter: null,                      // initial map center coordinates from configuration file [34.0522, -118.2437]
 	InitialMapZoomLevel: null,                   // initial map zoom level from configuration file (ex. 10)
+	InitialCharts: null,                         // initial charts from GEO_CONFIG.js
 	Index_of_neighborhood_change: false,         // draw INC map or not form configuration file (default: false)
 	Maps_of_neighborhood: true,                  // draw Cluster maps or not form configuration file (default: true)
 	Distribution_INC1: false,                    // draw INC distribution chart or not form configuration file (default: false)
@@ -165,6 +159,7 @@ var app={
 	Zscore_Means_across_Clusters: false,         // draw Zscore heatmap or not from configuration file (default: false)
 	Zscore_Means_of_Each_Cluster: false,         // draw Zscore barchart or not from configuration file (default: false)
 	Barchart_of_Subject_Clusters: 0,             // Number of subject barchart for cluster count
+	BoxPlot_of_Subject_Clusters: 0,              // Number of subject box plot for cluster count
 	NumOfDecimalPlaces: 2,                       // the number of decimal places (default: 2)
 	MapWidth: "500px",                           // map width of each map (default: 500px)
 	MapHeight: "500px",                          // map height of each map (default: 500px)
@@ -179,7 +174,9 @@ var app={
 	selectedBounds : null,                       // global area for map bounds when selected GeoJSON data update
 	fadeCount: 1000,                             // unique fade id for console.log
 	faded_at: moment(new Date()),                // fade start time for console.log
-
+	
+	lastLassoedD: null,                          // last lassod div in the scatter plots
+	sPointsScatter: [],                          // selected points in the scatter plots
 	sPointsParcats: [],                          // selected points in the parallel categories diagram
 
 	maps: {map: null, bounds: null, geojson: null, info: null, legend: null, layers: null, layerscontrol:null, lastHighlightedTractid: null, classification: null, item: null, items: null, zIntervals: null, mIntervals: null, nPolygonbyClass: [], densityChart: {minX: null, maxX: null, minY: null, maxY: null}},
@@ -217,13 +214,13 @@ Olive: AAAA00
 	
 */					
 	colorGradient: [
-					"#77AADD","#44BB99","#EEDD88","#FFAABB","#EE8866",
-					"#99DDFF","#BBCC33","#fdbf6f","#cab2d6","#e31a1c",
-					"#33a02c","#1f78b4","#6a3d9a","#a6cee3","#b2df8a",
-					"#cab2d6","#e6e600","#b15928","#8dd3c7","#bebada",
-					"#fb8072","#AAAA00","#fccde5","#d9d9d9","#bc80bd",
-					"#ccebc5","#b03060","#1e90ff","#b8860b","#6666b2",
-					"#556b2f","#bc8f8f","#ff7f00"	
+		"#77AADD","#44BB99","#EEDD88", "#FFAABB","#EE8866", 
+		"#BBCC33","#fdbf6f","#ccebc5","#99DDFF","#bc80bd",
+		"#e31a1c","#33a02c","#1f78b4","#6a3d9a","#a6cee3",
+		"#b2df8a","#cab2d6","#e6e600","#b15928","#8dd3c7",
+		"#bebada","#FA6454","#A29E00","#fccde5","#1e90ff",
+		"#d9d9d9","#b03060","#cab2d6","#b8860b","#6666b2",
+		"#556b2f","#bc8f8f","#ff7f00"
 					],	
 
 
@@ -350,7 +347,7 @@ function draw_titlemap(mIDX, year) {
 	// set drop-down list of 'Year:'
 	var html_year = 'Year: <select name="yearSelect" onChange="year_change(\'' + mIDX + '\')">';
 	if( mIDX == "map0"){
-		html_year = app.subjectName + ': <select name="yearSelect" onChange="year_change(\'' + mIDX + '\')">';
+		html_year = app.subjectName + ': <select name="yearSelect" onChange="year_change(\'' + mIDX + '\')" style = "font-size:120%;">';
 	}else{
 		html_year = 'Neighborhood:' + ' <select name="yearSelect" onChange="year_change(\'' + mIDX + '\')">';
 	}	
@@ -386,7 +383,7 @@ function draw_titlemap(mIDX, year) {
 		var html_metroInterval =
 			'<span style="font-size: 80%;">' +
 			'	 <input id="metroInterval" type="checkbox" name="'+mIDX+'-checkbox" value="metroInterval" Checked>' +
-			'    <label for="metroInterval" >Local Class Intervals</label>' +
+			'    <label for="metroInterval" >Local Class</label>' +
 			'</span>';
 		$("#"+mIDX+" .map_metroInterval").html(html_metroInterval);
 	}
@@ -571,22 +568,131 @@ function draw_titlemap(mIDX, year) {
 }
 
 function draw_titleSubjectBarchart(subjectBarchartD, selectedIndex) {
-	console.log("draw_titleSubjectBarchart started.  subjectBarchartD:", subjectBarchartD)
+	console.log("draw_titleSubjectBarchart started.  subjectBarchartD:", subjectBarchartD, selectedIndex)
 	
 	theYearOnMap = "2018";
 	
 	$("#"+subjectBarchartD+" .map_id").html(' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ');
 	
 	// set drop-down list of 'subjectName:'
-	var html_subject = app.subjectName + ': <select name="subjectSelect" onChange="barchart_subject_change(\'' + subjectBarchartD + '\')">';
+	var html_subject = app.subjectName + ': <select name="subjectBarchartSelect" onChange="barchart_subject_change(\'' + subjectBarchartD + '\')" style = "font-size:120%;" >';
 	for (var i=0; i<GEO_CLUSTER[theYearOnMap].length; i++) {
 		subjectName = GEO_CLUSTER[theYearOnMap][i][0];
-		selected = (i == selectedIndex) ? "selected" : ""
+		//selected = (i == selectedIndex) ? "selected" : ""
+		selected = ((" "+subjectName).localeCompare(selectedIndex) == 0) ? "selected" : ""
 		html_subject += '<option value="'+i+'" '+selected+' class="line_none">&nbsp; '+subjectName+' &nbsp;</option>';
 	}
 	html_subject += '</select>';
 	$("#"+subjectBarchartD+" .map_cluster").html(html_subject);
 	$("#"+subjectBarchartD+" .map_id").css("background-color", app.colorGradient1[1]);
+/*	
+	var html_fixAxes =
+		'<span style="font-size: 80%;">' +
+		'	 <input id="'+subjectBarchartD+'-fixAxes" type="checkbox" name="subjectBarchart_fixAxes" value="Fix Axes">' +
+		'    <label for="fixAxes">Fix Axes</label>' +
+		'</span>';
+		
+	$("#"+subjectBarchartD+" .map_fixAxes").html(html_fixAxes);
+*/	
+	// if Fix Axes checkbox clicked
+	$('input[type=checkbox][id="'+subjectBarchartD+'-fixAxes"]').change(function() {
+		var fixAxes = $(this).is(":checked");
+		console.log(getNow(), subjectBarchartD, "fixAxes changed:", fixAxes);
+		$('input[type=checkbox][name="subjectBarchart_fixAxes"]').prop("checked", fixAxes);
+		
+		if (fixAxes == true) {
+			var minY =  Number.MAX_VALUE;
+			var maxY = -Number.MAX_VALUE;
+			for (var i=0; i<app.Barchart_of_Subject_Clusters; i++) {
+				var selectedIndex = $("#"+("subjectBarchart"+i)+" .map_cluster select[name=subjectBarchartSelect]").val();
+				var selectedRow = GEO_CLUSTER[theYearOnMap][selectedIndex];
+				for (var j=1; j<selectedRow.length; j++) {
+					if (minY > selectedRow[j]) minY = selectedRow[j];
+					if (maxY < selectedRow[j]) maxY = selectedRow[j];
+				}
+			}
+			var update = {
+				//'yaxis.range': [minY, maxY],
+				'yaxis.range': [0, maxY],
+			}
+			//console.log(update);
+
+			for (var i=0; i<app.Barchart_of_Subject_Clusters; i++) {
+				Plotly.relayout(("subjectBarchart"+i)+'_diagram', update);
+			}
+		} else {
+			// draw subject barchart
+			triggerSubjectBarchart("");
+		}
+	});
+}
+
+function draw_titleSubjectBoxPlot(subjectBoxPlotD, selectedIndex) {
+	console.log("draw_titleSubjectBoxPlot started.  subjectBoxPlotD:", subjectBoxPlotD, selectedIndex)
+	
+	theYearOnMap = "2018";
+	
+	$("#"+subjectBoxPlotD+" .map_id").html(' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ');
+	
+	// set drop-down list of 'subjectName:'
+	var html_subject = app.subjectName + ': <select name="subjectBoxPlotSelect" onChange="boxplot_subject_change(\'' + subjectBoxPlotD + '\')">';
+	//for (var i=0; i<GEO_CLUSTER[theYearOnMap].length; i++) {
+	//	subjectName = GEO_CLUSTER[theYearOnMap][i][0];
+	//	selected = ((" "+subjectName).localeCompare(selectedIndex) == 0) ? "selected" : ""
+	//	html_subject += '<option value="'+i+'" '+selected+' class="line_none">&nbsp; '+subjectName+' &nbsp;</option>';
+	//}
+	for (var i=1; i<GEO_VARIABLES[0].length; i++) {        // first column is geoid
+		subjectName = GEO_VARIABLES[0][i];
+		if (isYear(subjectName)) continue;
+		selected = (subjectName.localeCompare(selectedIndex) == 0) ? "selected" : ""
+		html_subject += '<option value="'+i+'" '+selected+' class="line_none">&nbsp;'+subjectName+' &nbsp;</option>';
+	}
+	html_subject += '</select>';
+	$("#"+subjectBoxPlotD+" .map_cluster").html(html_subject);
+	$("#"+subjectBoxPlotD+" .map_id").css("background-color", app.colorGradient1[1]);
+	
+	var html_fixAxes =
+		'<span style="font-size: 80%;">' +
+		'	 <input id="'+subjectBoxPlotD+'-fixAxes" type="checkbox" name="subjectBoxPlot_fixAxes" value="Fix Axes">' +
+		'    <label for="fixAxes">Fix Axes</label>' +
+		'</span>';
+	$("#"+subjectBoxPlotD+" .map_fixAxes").html(html_fixAxes);
+	
+	// if Fix Axes checkbox clicked
+	$('input[type=checkbox][id="'+subjectBoxPlotD+'-fixAxes"]').change(function() {
+		var fixAxes = $(this).is(":checked");
+		console.log(getNow(), subjectBoxPlotD, "fixAxes changed:", fixAxes);
+		$('input[type=checkbox][name="subjectBoxPlot_fixAxes"]').prop("checked", fixAxes);
+		
+		if (fixAxes == true) {
+			var minY =  Number.MAX_VALUE;
+			var maxY = -Number.MAX_VALUE;
+			for (var i=0; i<app.BoxPlot_of_Subject_Clusters; i++) {
+				//var selectedIndex = $("#"+("subjectBoxPlot"+i)+" .map_cluster select[name=subjectBoxPlotSelect]").val();
+				//var selectedVariable = GEO_CLUSTER[theYearOnMap][selectedIndex][0];
+				//var pCol = GEO_VARIABLES[0].indexOf(" "+selectedVariable);
+				var pCol = $("#"+("subjectBoxPlot"+i)+" .map_cluster select[name=subjectBoxPlotSelect]").val();
+				//if (pCol >= 0) {
+					for (var j=1; j<GEO_VARIABLES.length; j++) {
+						if (minY > GEO_VARIABLES[j][pCol]) minY = GEO_VARIABLES[j][pCol];
+						if (maxY < GEO_VARIABLES[j][pCol]) maxY = GEO_VARIABLES[j][pCol];
+					}
+				//}
+			}
+			var update = {
+				'yaxis.range': [minY, maxY],
+				//'yaxis.range': [0, maxY],
+			}
+			//console.log(update);
+
+			for (var i=0; i<app.BoxPlot_of_Subject_Clusters; i++) {
+				Plotly.relayout(("subjectBoxPlot"+i)+'_diagram', update);
+			}
+		} else {
+			// draw subject box plot
+			triggerSubjectBoxPlot("");
+		}
+	});
 }
 
 function draw_titleBarchart(barchartD) {
@@ -596,7 +702,7 @@ function draw_titleBarchart(barchartD) {
 	//$("#"+barchartD+" .map_notice").html('Nx: <i>Cluster type</i>');
 
 	// set drop-down list of 'Cluster:'
-	var html_cluster = 'Z Score Means in <select name="clusterSelect" onChange="barchart_cluster_change(\'' + barchartD + '\')">';
+	var html_cluster = 'Z Score Means in <select name="clusterSelect" onChange="barchart_cluster_change(\'' + barchartD + '\')" style = "font-size:120%;">';
 	for (var i=0; i<app.nClusters; i++) {
 		html_cluster += '<option value="'+i+'" class="line_none">&nbsp; Cluster '+i+' &nbsp;</option>';
 	}
@@ -1045,8 +1151,8 @@ function draw_globalSelection() {
 	var html_join = '<span style="font-size: 80%;">' +
 	//var html_join = '<span>' +
 					'	 <input id="globalJoin" type="checkbox" name="join_checkbox" value="groupingAuto">' +
-	//				'    <label for="globalJoin" style="color:gray;">Grouping All</label>' +
-					'    <label for="globalJoin">Grouping All</label>' +
+	//				'    <label for="globalJoin" style="color:gray;">Link All Maps</label>' +
+					'    <label for="globalJoin">Link All Maps</label>' +
 					'</span>';
 	$("#global_join").html(html_join);
 
@@ -1224,7 +1330,8 @@ function draw_globalSelection() {
 		}).then((value) => {
 			//console.log("Redraw all maps by global_submit ended in "+(msec/1000).toFixed(1)+" seconds.");
 			triggerSubjectBarchart();
-			//triggerZscoreHeatmap();
+			triggerSubjectBoxPlot();
+			triggerZscoreHeatmap();
 			triggerZscoreBarchart();
 			triggerParcats();
 			triggerChordDiagram();
@@ -1298,8 +1405,25 @@ function year_change(mIDX) {
 
 function barchart_subject_change(subjectBarchartD) {
 	console.log("barchart_subject_change started.  subjectBarchartD:", subjectBarchartD)
-	triggerSubjectBarchart(subjectBarchartD);
-	//drawSubjectBarchart(subjectBarchartD)
+	var fixAxes = $('input[type=checkbox][id="'+subjectBarchartD+'-fixAxes"]').is(":checked");
+	console.log(getNow(), subjectBarchartD, "fixAxes changed:", fixAxes);
+	if (fixAxes) {
+		$('input[type=checkbox][name="subjectBarchart_fixAxes"]').prop("checked", false);
+		triggerSubjectBarchart("");
+	}
+	else triggerSubjectBarchart(subjectBarchartD);
+}
+
+
+function boxplot_subject_change(subjectBoxPlotD) {
+	console.log("boxplot_subject_change started.  subjectBoxPlotD:", subjectBoxPlotD)
+	var fixAxes = $('input[type=checkbox][id="'+subjectBoxPlotD+'-fixAxes"]').is(":checked");
+	console.log(getNow(), subjectBoxPlotD, "fixAxes changed:", fixAxes);
+	if (fixAxes) {
+		$('input[type=checkbox][name="subjectBoxPlot_fixAxes"]').prop("checked", false);
+		triggerSubjectBoxPlot("");
+	}
+	else triggerSubjectBoxPlot(subjectBoxPlotD);
 }
 
 
@@ -2066,6 +2190,31 @@ $( document ).ready(function() {
 			button: "CONTINUE",
 		});
 	}
+	
+	// set default InitialCharts for each chart
+	app.InitialCharts = [];
+	var nError = 0;
+	if (typeof InitialCharts !== 'undefined' && InitialCharts instanceof Array) {
+		for (var i=0; i<InitialCharts.length; i++) {
+			if (typeof InitialCharts[i] === 'string' && InitialCharts[i] in CA.features[0].properties) {
+				app.InitialCharts.push(InitialCharts[i]);
+			} else {
+				nError += 1;
+				console.log("The InitialCharts[" + i + "] '"+InitialCharts[i]+"' is not found in 'GEO_CONFIG.js'.");
+			}
+		}
+	}
+	if (nError != 0) {
+		console.log("The InitialCharts in 'GEO_CONFIG.js' are not match with 'GEO_VARIABLES.js'.");
+		swal({
+			title: "Attention!",
+			text: "The InitialCharts in 'GEO_CONFIG.js' you provided has "+nError+" errors.\nProceed anyway?",
+			icon: "warning",
+			button: "CONTINUE",
+		});
+		console.log("All titles of 'GEO_VARIABLES.js' are used instead of the InitialCharts in 'GEO_CONFIG.js'.");
+		app.InitialCharts = [];
+	}
 
 	//app.layers = [];
 	//for (var i=0; i<app.m; i++) {
@@ -2173,6 +2322,35 @@ $( document ).ready(function() {
 		app.Barchart_of_Subject_Clusters = Barchart_of_Subject_Clusters;
 	}
 	//console.log("app.Barchart_of_Subject_Clusters:", app.Barchart_of_Subject_Clusters);
+	
+	// complet app.InitialCharts when shorter then Barchart_of_Subject_Clusters
+	if (app.InitialCharts.length < app.Barchart_of_Subject_Clusters) {
+		console.log(app.InitialCharts);
+		var y = Object.keys(GEO_CLUSTER)[0];         // get the first year from the GEO_CLUSTER
+		for (var i=app.InitialCharts.length; i<app.Barchart_of_Subject_Clusters; i++) {
+			app.InitialCharts.push(" "+GEO_CLUSTER[y][i][0]);
+		}
+		console.log(app.InitialCharts);
+	}
+	
+	// set number of subject box polts to global variable
+	if (typeof BoxPlot_of_Subject_Clusters !=='undefined' && typeof BoxPlot_of_Subject_Clusters === 'number') {
+		app.BoxPlot_of_Subject_Clusters = BoxPlot_of_Subject_Clusters;
+	}
+	if (app.BoxPlot_of_Subject_Clusters != 0 && app.Barchart_of_Subject_Clusters != 0 &&
+		app.BoxPlot_of_Subject_Clusters != app.Barchart_of_Subject_Clusters)
+		app.BoxPlot_of_Subject_Clusters = app.Barchart_of_Subject_Clusters
+	console.log("app.BoxPlot_of_Subject_Clusters:", app.BoxPlot_of_Subject_Clusters);
+	
+	// complet app.InitialCharts when shorter then BoxPlot_of_Subject_Clusters
+	if (app.InitialCharts.length < app.BoxPlot_of_Subject_Clusters) {
+		console.log(app.InitialCharts);
+		var y = Object.keys(GEO_CLUSTER)[0];         // get the first year from the GEO_CLUSTER
+		for (var i=app.InitialCharts.length; i<app.BoxPlot_of_Subject_Clusters; i++) {
+			app.InitialCharts.push(" "+GEO_CLUSTER[y][i][0]);
+		}
+		console.log(app.InitialCharts);
+	}
 	
 	// set number of decimal places to global variable
 	if (typeof Num_Of_Decimal_Places !== 'undefined' && typeof Num_Of_Decimal_Places === 'number') {
@@ -2287,6 +2465,7 @@ $( document ).ready(function() {
 		}).then((value) => {
 			//console.log("Initiaize all maps ended in "+(msec/1000).toFixed(1)+" seconds.");
 			triggerSubjectBarchart();
+			triggerSubjectBoxPlot();
 			triggerZscoreHeatmap();
 			triggerZscoreBarchart();
 			triggerParcats();
@@ -2322,6 +2501,7 @@ function analysisAndDrawMaps(scrollTop) {
 	}).then((value) => {
 		//console.log("Initiaize all maps ended in "+(msec/1000).toFixed(1)+" seconds.");
 		triggerSubjectBarchart();
+		triggerSubjectBoxPlot();
 		triggerZscoreHeatmap();
 		triggerZscoreBarchart()
 		triggerParcats();
@@ -2425,13 +2605,29 @@ function draw_all_maps() {
 			var map_html = '';
 			map_html += '<div>';
 			map_html += '	<div class="map_id" style="margin:5px 0px 0px 35px; height:10px; display:none; float:left;"></div>';
-			map_html += '	<div class="map_cluster" style="margin:0px 0px 0px 50px; height:25px;float:left;"></div>';
+			map_html += '	<div class="map_cluster" style="margin:0px 20px 0px 10px; height:25px;float:left;"></div>';
 			//map_html += '	<div class="map_nPolygon" style="margin:0px 100px 0px 0px; height:25px;float:left;"></div>';
-			//map_html += '	<div class="map_fixAxes" style="height:25px;float:left;"></div>';
+			map_html += '	<div class="map_fixAxes" style="height:25px;float:left;"></div>';
 			map_html += '</div>';
 			map_html += '<br>';
 			map_html += '<div id="subjectBarchart'+i+'_diagram" class="chart" style="overflow:auto;"></div>';
 			document.getElementById("subjectBarchart"+i).innerHTML = map_html;
+		}
+	}
+	
+	if (app.BoxPlot_of_Subject_Clusters > 0) {
+		for (var i=0; i<app.BoxPlot_of_Subject_Clusters; i++) {
+			var map_html = '';
+			map_html += '<div>';
+			map_html += '	<div class="map_id" style="margin:5px 0px 0px 35px; height:10px; display:none; float:left;"></div>';
+			map_html += '	<div class="map_cluster" style="margin:0px 20px 0px 10px; height:25px;float:left;"></div>';
+			//map_html += '	<div class="map_nPolygon" style="margin:0px 100px 0px 0px; height:25px;float:left;"></div>';
+			map_html += '	<div class="map_fixAxes" style="height:25px;float:left;"></div>';
+			map_html += '</div>';
+			map_html += '<br>';
+			map_html += '<div id="subjectBoxPlot'+i+'_diagram" class="chart" style="overflow:auto;" ' +
+					'onmouseenter="mouseenterBoxPlot(this)" onmouseleave="mouseleaveBoxPlot(this)"></div>';
+			document.getElementById("subjectBoxPlot"+i).innerHTML = map_html;
 		}
 	}
 	
@@ -2584,7 +2780,14 @@ function draw_all_maps() {
 	// draw titles of each subject barchart
 	for (var i=0; i<app.Barchart_of_Subject_Clusters; i++) {
 		var subjectBarchartD = "subjectBarchart" + i;
-		draw_titleSubjectBarchart(subjectBarchartD, i);
+		//draw_titleSubjectBarchart(subjectBarchartD, i);
+		draw_titleSubjectBarchart(subjectBarchartD, app.InitialCharts[i]);
+	}
+	
+	// draw titles of each subject boxplot
+	for (var i=0; i<app.BoxPlot_of_Subject_Clusters; i++) {
+		var subjectBoxPlotD = "subjectBoxPlot" + i;
+		draw_titleSubjectBoxPlot(subjectBoxPlotD, app.InitialCharts[i]);
 	}
 	
 	// draw titles of zscore barchart
@@ -2934,6 +3137,7 @@ function redraw_maps(mIDX, drawMode, baseBounds) {
 				mapOn_movestart_set();
 				mapOn_moveend_set();
 				triggerSubjectBarchart();
+				triggerSubjectBoxPlot();
 				triggerZscoreHeatmap();
 				triggerZscoreBarchart()
 				triggerParcats();
@@ -3155,7 +3359,13 @@ function drawMapContainer() {
 			html_maps += '<div id="subjectBarchart'+i+'" class="mapArea"></div><div class="MapBetween"></div>';
 		}
 	}
-
+	
+	if (app.BoxPlot_of_Subject_Clusters) {
+		for (var i=0; i<app.BoxPlot_of_Subject_Clusters; i++) {
+			html_maps += '<div id="subjectBoxPlot'+i+'" class="mapArea"></div><div class="MapBetween"></div>';
+		}
+	}
+	
 	if (app.Chord_Diagram_in_neighborhoods) {
 		for (var i=0; i<app.m-1; i++) {
 			//if (app.mYears[i].startsWith("INC")) continue;
@@ -3325,11 +3535,12 @@ function drawSubjectBarchart(subjectBarchartD) {
 	
 	$("#"+subjectBarchartD+"_diagram").html("");
 	theYearOnMap = "2018"
-	var selectedIndex = $("#"+subjectBarchartD+" .map_cluster select[name=subjectSelect]").val();
+	var selectedIndex = $("#"+subjectBarchartD+" .map_cluster select[name=subjectBarchartSelect]").val();
 	
 	var trace1 = {
 		//x: ['C0','C1', 'C2', 'C3', 'C4', 'C5', 'C6'],
-		x: Array.from(new Array(app.nClusters),(val,index)=> "C" + index),
+		x: Array.from(new Array(app.nClusters),(val,index)=> 
+						("C"+index in ClusterLabels ? ClusterLabels["C"+index] : "C"+index)),
 		y: GEO_CLUSTER[theYearOnMap][selectedIndex].slice(1),
 		marker:{
 			color: app.colorGradient1
@@ -3344,13 +3555,15 @@ function drawSubjectBarchart(subjectBarchartD) {
 		margin: {
 			//l: 50,
 			//r: 0,
-			b: 60,
-			t: 40,
+			b: 20,     // 60
+			t: 30,     // 40
 			pad: 4
 		},
         'xaxis': {
 			//range: [0, 1],
-			'title': 'Neighborhood'
+			//'title': 'Neighborhood'
+			side: 'bottom',
+			automargin: true,
 		},
         'yaxis': {
 			fixedrange: true,
@@ -3363,6 +3576,224 @@ function drawSubjectBarchart(subjectBarchartD) {
 	Plotly.newPlot(subjectBarchartD+"_diagram", data, layout, {showSendToCloud: true, displayModeBar: false});
 	
 	return;
+}
+
+
+// check and draw subject boxplot
+function triggerSubjectBoxPlot(subjectBoxPlotD="") {
+	console.log(getNow(), "triggerSubjectBoxPlot started.  subjectBoxPlotD:", subjectBoxPlotD)
+	if (subjectBoxPlotD != "") drawSubjectBoxPlot(subjectBoxPlotD)
+	else {
+		for (var i=0; i<app.BoxPlot_of_Subject_Clusters; i++ ) {
+			drawSubjectBoxPlot("subjectBoxPlot"+i)
+		}
+	}
+}
+
+function drawSubjectBoxPlot(subjectBoxPlotD, eventData="") {
+	if (subjectBoxPlotD != $("#"+subjectBoxPlotD).attr("id")) return;				 // Skip, if no div
+	console.log(getNow(), "drawSubjectBoxPlot started.  subjectBoxPlotD:", subjectBoxPlotD)
+	
+	$("#"+subjectBoxPlotD+"_diagram").html("");
+	
+	// get first year column index from app.titles
+	var theYearOnMap = "2018"
+	var theYearCol = -1;
+	for (var i=0; i<GEO_VARIABLES[0].length; i++) {
+		var subjectName = GEO_VARIABLES[0][i];
+		if (isYear(subjectName)) {
+			theYearCol = i;
+			break;
+		}
+	}
+	console.log("GEO_VARIABLES[0]["+theYearCol+"]:", GEO_VARIABLES[0][theYearCol])
+	
+	var selectedIndex = $("#"+subjectBoxPlotD+" .map_cluster select[name=subjectBoxPlotSelect]").val();
+	
+	var xData = Array.from(new Array(app.nClusters),(val,index)=> 
+					("C"+index in ClusterLabels ? ClusterLabels["C"+index] : "C"+index));
+	//console.log(xData);
+	
+	var yData = [];
+	var tooltips = [];
+	for (var i=0; i<app.nClusters; i++) {
+		var yRow = [];
+		var geocodes = [];
+		for (var j=1; j<GEO_VARIABLES.length; j++) {
+			if (GEO_VARIABLES[j][theYearCol] == i) {
+				geocodes.push("geoid : "+GEO_VARIABLES[j][0]);
+				yRow.push(GEO_VARIABLES[j][selectedIndex]);
+			}
+		}
+		tooltips.push(geocodes);
+		yData.push(yRow);
+	}
+	console.log(tooltips);
+	console.log(yData);
+	
+	// reset highlight on this map
+	if (app.lastLassoedD == subjectBoxPlotD) {
+		resetSytlefromScatter(app.sPointsScatter);
+		app.sPointsScatter = [];
+	}
+	//var selectedpoints = new Array(app.nClusters).fill([]);        // shallow copy  =>  same null array of all
+	var selectedpoints = new Array(app.nClusters);
+	for (var i=0; i<app.nClusters; i++) selectedpoints[i] = [];
+	//console.log(selectedpoints);
+	//if (typeof eventData === "object") {
+	//	for (var i=0; i<eventData.points.length; i++) {
+	//		//if (eventData.points[i].curveNumber != 0) continue;
+	//		if (eventData.points[i].hasOwnProperty("hoverOnBox") &&  eventData.points[i].hoverOnBox == true) continue;
+	//		//var c = eventData.points[i].x.replace("C", "");
+	//		var c = eventData.points[i].data.name.replace("C", "");
+	//		selectedpoints[c].push(eventData.points[i].pointIndex);
+	//		hovertext = eventData.points[i].data.hovertext[eventData.points[i].pointIndex];
+	//		app.sPointsScatter.push(hovertext.split(":")[1].trim());
+	//	}
+	//}
+	//console.log('selectedpoints:', selectedpoints);
+	//console.log('app.sPointsScatter:', app.sPointsScatter);
+	
+	var data = [];
+	for (var i=0; i<xData.length; i++) {
+		var result = {
+			type: 'box',
+			y: yData[i],
+			//title: tooltips[i],
+			name: xData[i],
+			boxpoints: 'all',
+			boxmean: true,
+			jitter: 0.5,
+			whiskerwidth: 0.2,
+			//fillcolor: colors[i],
+			//opacity:0.9,
+			marker: {
+				size: 3,
+				opacity:1,
+				color: app.colorGradient1[i],
+			},
+			//selected: { marker: { size: 5, color: '#FF0066' } },
+			selected: { marker: { size: 5, color: '#00ffff' } },
+			hovertext: tooltips[i],
+			hoverinfo: "text+y",
+			line: {
+				width: 3
+			},
+		};
+		if (selectedpoints[i].length > 0) result['selectedpoints'] = selectedpoints[i];
+		data.push(result);
+	}
+	
+	var layout = {
+		//title: 'Points Scored by the Top 9 Scoring NBA Players in 2012',
+		'xaxis': {
+			//range: [0, 1],
+			//'title': 'Neighborhood'
+			side: 'bottom',
+			automargin: true,
+		},
+		yaxis: {
+			//autorange: true,
+			showgrid: true,
+			zeroline: true,
+			//dtick: 5,
+			//gridcolor: 'rgb(255, 255, 255)',
+			//gridwidth: 1,
+			//zerolinecolor: 'rgb(255, 255, 255)',
+			//zerolinewidth: 2
+		},
+		margin: {
+			l: 40,
+			r: 20,
+			b: 20,
+			t: 20
+		},
+		'dragmode': 'lasso',
+		showlegend: false
+	};
+	
+	Plotly.newPlot(subjectBoxPlotD+"_diagram", data, layout, {showSendToCloud: true, displayModeBar: true});
+	
+	var subjectBoxPlotDiv = document.getElementById(subjectBoxPlotD+"_diagram");
+	subjectBoxPlotDiv.on('plotly_selected', function(eventData) {
+		if (typeof eventData !== "object" || !("points" in eventData)) return;
+		//console.log(eventData.points);
+		if (app.lastLassoedD != null && app.lastLassoedD != subjectBoxPlotD) drawSubjectBoxPlot(app.lastLassoedD);
+		app.lastLassoedD = subjectBoxPlotD
+		if (app.sPointsScatter != null && app.sPointsScatter.length != 0) resetSytlefromScatter(app.sPointsScatter);
+		app.sPointsScatter = getSelectedGeoidFromEventData(eventData)
+		setSytleHighlightfromScatter(app.sPointsScatter);
+	});
+	//subjectBoxPlotDiv.on('plotly_click', function(eventData) {
+	//	if (typeof eventData !== "object" || !("points" in eventData)) return;
+	//	//console.log(eventData.points);
+	//	if (app.lastLassoedD != null && app.lastLassoedD != subjectBoxPlotD) drawSubjectBoxPlot(app.lastLassoedD);
+	//	app.lastLassoedD = subjectBoxPlotD
+	//	if (app.sPointsScatter != null && app.sPointsScatter.length != 0) resetSytlefromScatter(app.sPointsScatter);
+	//	app.sPointsScatter = getSelectedGeoidFromEventData(eventData)
+	//	setSytleHighlightfromScatter(app.sPointsScatter);
+	//});
+	
+	function getSelectedGeoidFromEventData(eventData) {
+		var geoids = [];
+		if (typeof eventData === "object") {
+			for (var i=0; i<eventData.points.length; i++) {
+				if (eventData.points[i].hasOwnProperty("hoverOnBox") &&  eventData.points[i].hoverOnBox == true) continue;
+				var c = eventData.points[i].data.name.replace("C", "");
+				hovertext = eventData.points[i].data.hovertext[eventData.points[i].pointIndex];
+				geoids.push(hovertext.split(":")[1].trim());
+			}
+		}
+		//console.log('geoids:', geoids);
+		return geoids;
+	}
+}
+
+
+function mouseenterBoxPlot(e) {
+	//console.log("mouse enter into the " + e.id)
+	if (!e.id.startsWith(app.lastLassoedD)) return;
+	setSytleHighlightfromScatter(app.sPointsScatter);
+}
+
+function mouseleaveBoxPlot(e) {
+	//console.log("mouse leave from the " + e.id)
+	if (!e.id.startsWith(app.lastLassoedD)) return;
+	resetSytlefromScatter(app.sPointsScatter);
+}
+
+// set highlight to style for all maps
+function setSytleHighlightfromScatter(geokeys, sIDX=null, color="#00ffff", weight=3, fillOpacity=0.9) {
+	for (var i=0; i<app.m; i++) {
+		var mapN = "map" + i;
+		if (!app[mapN].geojson) continue;
+		var selectedColor = (sIDX != null && mapN != sIDX) ? '#666' : color;
+		for (var j=0; j<geokeys.length; j++) {
+			var geokey = geokeys[j];
+			var layerN = app[mapN].geojson._layers[app[mapN].layers[geokey]];
+			if (!layerN) continue;
+			layerN.setStyle({
+				color: selectedColor,
+				weight: weight,
+				fillOpacity: fillOpacity,
+				dashArray: '',
+			});
+		}
+	}
+}
+
+// reset style for all maps
+function resetSytlefromScatter(geokeys) {
+	for (var i=0; i<app.m; i++) {
+		var mapN = "map" + i;
+		if (!app[mapN].geojson) continue;
+		for (var j=0; j<geokeys.length; j++) {
+			var geokey = geokeys[j];
+			var layerN = app[mapN].geojson._layers[app[mapN].layers[geokey]];
+			if (!layerN) continue;
+			app[mapN].geojson.resetStyle(layerN);
+		}
+	}
 }
 
 
@@ -3392,8 +3823,18 @@ function drawZscoreHeatmap(heatmapD) {
 	console.log("ZscoreHeatmap w: "+w)
 	console.log("ZscoreHeatmap h: "+h)
 	
+	yAxisUserDefined = [];
+	for (var y=0; y<GEO_ZSCORES.yAxis.length; y++) {
+		if (GEO_ZSCORES.yAxis[y] in ClusterLabels) 
+			yAxisUserDefined.push(ClusterLabels[GEO_ZSCORES.yAxis[y]]);
+		else
+			yAxisUserDefined.push(GEO_ZSCORES.yAxis[y]);
+	}
+	console.log("yAxisUserDefined: ", yAxisUserDefined)
+	
 	var xValues = JSON.parse(JSON.stringify(GEO_ZSCORES.xAxis));
-	var yValues = JSON.parse(JSON.stringify(GEO_ZSCORES.yAxis));
+	//var yValues = JSON.parse(JSON.stringify(GEO_ZSCORES.yAxis));
+	var yValues = JSON.parse(JSON.stringify(yAxisUserDefined));
 	var zValues = JSON.parse(JSON.stringify(GEO_ZSCORES.data));
 	yValues.reverse();
 	zValues.reverse();
@@ -3446,7 +3887,8 @@ function drawZscoreHeatmap(heatmapD) {
 				xref: 'x1',
 				yref: 'y1',
 				x: GEO_ZSCORES.xAxis[j],
-				y: GEO_ZSCORES.yAxis[i],
+				//y: GEO_ZSCORES.yAxis[i],
+				y: yAxisUserDefined[i],
 				text: GEO_ZSCORES.data[i][j],
 				font: {
 					family: 'Arial',
@@ -3597,7 +4039,7 @@ function drawdrawParcatsDiagram(parcatsD) {
 			html += '<div style="padding:60px 50px; color:blue">';
 			html += '<i>';
 			html += 'This parallel categories diagram is shown only when all maps have the same extent.<br><br>';
-			html += '"Sync", "Join group" and "Grouping All" can be used to make maps have the same extent.';
+			html += '"Sync", "Join group" and "Link All Maps" can be used to make maps have the same extent.';
 			html += '</i>';
 			html += '</div>';
 			//$("#chart_ParallelCoordinates").html(html);
@@ -3942,7 +4384,7 @@ function triggerChordDiagram() {
 			html += '<div style="padding:60px 50px; color:blue">';
 			html += '<i>';
 			html += 'This chord diagram is shown only when all maps have the same extent.<br><br>';
-			html += '"Sync", "Join group" and "Grouping All" can be used to make maps have the same extent.';
+			html += '"Sync", "Join group" and "Link All Maps" can be used to make maps have the same extent.';
 			html += '</i>';
 			html += '</div>';
 			$("#"+chordD+"_diagram").html(html);

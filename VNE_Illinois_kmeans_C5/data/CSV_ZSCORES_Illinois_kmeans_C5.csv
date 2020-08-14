@@ -1,0 +1,6 @@
+Cluster,Median monthly housing costs,% below poverty,% unemployed,% with 4year college degree,% manufacturing,% service industry,% structures more than 30 years old,% households moved <10 years ago,% multiunit structures,% owner occupied housing,% vacant housing,% > 60 years old,% < 18 years old,% white,% Asian,% Hispanic,% black,% foreign born
+C0,-0.48,0.02,-0.05,-0.4,0.14,0.06,0.25,-0.23,-0.36,0.24,0.21,0.27,-0.11,0.4,-0.34,-0.32,-0.27,-0.44
+C1,1.39,0.29,-0.18,1.89,-0.71,-0.55,-0.38,1.85,3.02,-2.01,-0.22,-0.87,-0.95,-1.18,2.92,0.5,0.3,2.18
+C2,1.28,-0.69,-0.33,1.14,-0.28,-0.5,-1.1,-0.0,0.03,0.35,-0.72,-0.37,0.38,0.01,0.4,0.08,-0.14,0.33
+C3,0.52,0.32,0.35,-0.13,0.25,0.51,0.41,0.55,1.0,-1.02,-0.46,-0.96,0.6,-1.26,0.43,3.39,0.34,2.48
+C4,-0.01,1.87,2.05,-0.5,-0.54,1.26,0.58,0.75,0.8,-1.74,0.58,-0.48,0.49,-3.53,-0.26,0.18,4.18,-0.03

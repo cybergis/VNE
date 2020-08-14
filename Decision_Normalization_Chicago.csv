@@ -1,0 +1,26 @@
+﻿COVID,ACS
+total_count,Population
+total_tested,Population
+race_White_count,white
+race_White_tested,white
+race_Black_count,black
+race_Black_tested,black
+race_Asian_count,Asian
+race_Asian_tested,Asian
+race_Hispanic_count,Hispanic
+race_Hispanic_tested,Hispanic
+age_<20_count,age less than 20
+age_<20_tested,age less than 20
+age_20-29_count,age 20 to 29
+age_20-29_tested,age 20 to 29
+age_30-39_count,age 30 to 39
+age_30-39_tested,age 30 to 39
+age_40-49_count,age 40 to 49
+age_40-49_tested,age 40 to 49
+age_50-59_count,age 50 to 59
+age_50-59_tested,age 50 to 59
+age_60-69_count,age 60 to 69
+age_60-69_tested,age 60 to 69
+age_70-79_count,age 70 to 79
+age_70-79_tested,age 70 to 79
+age_80+_count,age 80  above

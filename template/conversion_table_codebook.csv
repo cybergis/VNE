@@ -1,75 +1,55 @@
-seq,code,variable,short_name,full_name
-1-01,nhwhtXX,p_nonhisp_white_persons,"% white (non-Hispanic)","percentage of persons of white race, not Hispanic origin"
-1-02,nhblkXX,p_nonhisp_black_persons,"% black (non-Hispanic)","percentage of persons of black race, not Hispanic origin"
-1-03,hispXX,p_hispanic_persons,% Hispanic,percentage of persons of Hispanic origin
-1-04,ntvXX,p_native_persons,% Native American race,percentage of persons of Native American race
-1-05,asianXX,p_asian_persons,% Asian and Pacific Islander race,percentage of persons of Asian race (and Pacific Islander)
-1-06,hawXX,p_hawaiian_persons,% Hawaiian race,percentage of persons of Hawaiian race
-1-07,indiaXX,p_asian_indian_persons,% Indian birth/race,percentage of persons of Asian Indian race
-1-08,chinaXX,p_chinese_persons,% Chinese birth/race,percentage of persons of Chinese race
-1-09,filipXX,p_filipino_persons,% Filipino birth/race,percentage of persons of Filipino race
-1-10,japanXX,p_japanese_persons,% Japanese birth/race,percentage of persons of Japanese race
-1-11,koreaXX,p_korean_persons,% Korean birth/race,percentage of persons of Korean race
-1-12,vietXX,p_vietnamese_persons,% Vietnamese race,percentage of persons of Vietnamese race
-1-13,a15blkXX,p_black_under_15,"% 15 and under (non-Hispanic black)",percentage of 0-15 years old of black race
-1-14,a60blkXX,p_black_over_60,"% 60 and older (non-Hispanic black)",percentage of 60 years and older of black race
-1-15,a15hspXX,p_hispanic_under_15,"% 15 and under (Hispanic)","percentage of 0-15 years old, persons of Hispanic origins"
-1-16,a60hspXX,p_hispanic_over_60,"% 60 and older (Hispanic)","percentage of 60 years and older, persons of Hispanic origins"
-1-17,a15ntvXX,p_native_under_15,"% 15 and under (Native American)",percentage of 0-15 years old of Native American race
-1-18,a60ntvXX,p_native_over_60,"% 60 and older (Native American)",percentage of 60 years and older of Native American race
-1-19,a15asnXX,p_asian_under_15,"% 15 and under (Asian/Pacific Islanders)",percentage of 0-15 years old of Asians and Pacific Islanders
-1-20,a60asnXX,p_asian_over_60,"% 60 and older (Asian/Pacific Islanders)",percentage of 60 years and older of Asians and Pacific Islanders
-2-01,mexXX,p_mexican_pop,% Mexican birth/ethnicity,percentage of persons of Mexican parentage or ancestry
-2-02,cubanXX,p_cuban_pop,% Cuban birth/ethnicity,percentage of persons of Cuban parentage or ancestry
-2-03,prXX,p_puerto_rican_pop,% Puerto Rican birth/ethnicity,percentage of persons of Puerto Rican parentage or ancestry
-2-04,ruancXX,p_russian_pop,% Russian/USSR parentage/ancestry,percentage of persons of Russian/USSR parentage or ancestry
-2-05,itancXX,p_italian_pop,% Italian parentage/ancestry,percentage of persons of Italian parentage or ancestry
-2-06,geancXX,p_german_pop,% German parentage/ancestry,percentage of persons of German parentage or ancestry
-2-07,irancXX,p_irish_pop,% Irish parentage/ancestry,percentage of persons of Irish parentage or ancestry
-2-08,scancXX,p_scandanavian_pop,% Scandinavian parentage/ancestry,percentage of persons of Scandinavian parentage/ancestry
-2-09,fbXX,p_foreign_born_pop,% foreign born,percentage of foreign-born
-2-10,n10immXX,p_recent_immigrant_pop,% immigrated in past 10 years,percentage of recent immigrants (within the past 10 years)
-2-11,natXX,p_naturalized_pop,% Naturalized,percentage of naturalized foreign-born
-2-12,olangXX,p_other_language,"% speaking other language at home (age 5+)",percentage of persons who speak language other than English at home
-2-13,lepXX,p_limited_english,"% speaking English not well (age 5+)",percentage of persons who speak English not well
-2-14,rufbXX,p_russian_born_pop,% Russian/USSR birth,percentage of persons who were born in Russia/ USSR
-2-15,itfbXX,p_italian_born_pop,% Italian birth,percentage of persons who were born in Italy
-2-16,gefbXX,p_german_born_pop,% German birth,percentage of persons who were born in Germany
-2-17,irfbXX,p_irish_born_pop,% Irish birth,percentage of persons who were born in Ireland
-2-18,scfbXX,p_scandanavian_born_pop,% Scandinavian birth,percentage of persons who were born in Scandinavian Countries
-3-01,hsXX,p_edu_hs_less,% with high school degree or less,percentage of persons with high school degree or less
-3-02,colXX,p_edu_college_greater,% with 4-year college degree or more,percentage of persons with at least a four-year college degree
-3-03,unempXX,p_unemployment_rate,% unemployed,percent unemployed
-3-04,flabfXX,p_female_labor_force,% female labor force participation,percentage of females in labor force
-3-05,profXX,p_employed_professional,% professional employees,percentage of professional employees (by occupations)
-3-06,manufXX,p_employed_manufacturing,% manufacturing employees,percentage of manufacturing employees (by industries)
-3-07,sempXX,p_employed_self_employed,% self-employed,percentage of self-employed
-3-08,vetXX,p_veterans,% veteran,percentage of veterans
-3-09,disXX,p_disabled,% with disability,percent with disability
-3-10,hincXX,median_household_income,"Median HH income (total)",Median household income
-3-11,hincwXX,median_income_whitehh,"Median HH income (whites)",Median household income for whites
-3-12,hincbXX,median_income_blackhh,"Median HH income (blacks)",Median household income for blacks
-3-13,hinchXX,median_income_hispanichh,"Median HH income (Hispanics)",Median household income for Hispanics
-3-14,hincaXX,median_income_asianhh,"Median HH income (Asian/ Pacific Islanders)",Median household income for Asians and Pacific Islanders
-3-15,incpcXX,per_capita_income,Per capita income,Per capita income
-3-16,npovXX,p_poverty_rate,"% in poverty (total)",percent poor
-3-17,n65povXX,p_poverty_rate_over_65,"% in poverty (65+)",percentage of 65 years and older in poverty
-3-18,nfmpovXX,p_poverty_rate_children,"% in poverty (families with children)",percentage of families with children in poverty
-3-19,nwpovXX,p_poverty_rate_white,"% in poverty (whites)",percentage of whites in poverty
-3-20,nbpovXX,p_poverty_rate_white,"% in poverty (African Americans)",percentage of whites in poverty
-3-21,nhpovXX,p_poverty_rate_hispanic,"% in poverty (Hispanics)",percentage of Hispanics in poverty
-3-22,nnapovXX,p_poverty_rate_native,"% in poverty (Native Americans)",percentage of Native Americans in poverty
-3-23,napovXX,p_poverty_rate_asian,"% in poverty (Asian/ Pacific Islanders)",percentage of Asian and Pacific Islanders in poverty
-4-01,vacXX,p_vacant_housing_units,% vacant units,percentage of vacant housing units
-4-02,ownXX,p_owner_occupied_units,% owner-occupied units,percentage of owner-occupied housing units
-4-03,multiXX,p_housing_units_multiunit_structures,% multi-family units,percentage of housing units in multi-unit structures
-4-04,mhmvalXX,median_home_value,Median home value,Median home value
-4-05,mrentXX,median_contract_rent,Median rent,Median monthly contract rent
-4-06,h30oldXX,p_structures_30_old,% structures more than 30 years old,percentage of structures built more than 30 years ago
-4-07,h10yrsXX,p_household_recent_move,% HH in neighborhood 10 years or less,percentage of household heads moved into unit less than 10 years ago
-4-08,a18undXX,p_persons_under_18,"% 17 and under (total)",percentage of persons age 17 years and under
-4-09,a60upXX,p_persons_over_60,"% 60 and older (total)",percentage of persons age 60 years and over
-4-10,a75upXX,p_persons_over_75,"% 75 and older (total)",percentage of persons age 75 years and over
-4-11,marXX,p_married,"% currently married (not separated)",percent currently married (excluding separated)
-4-12,wdsXX,p_widowed_divorced,"% widowed (divorced and separated)","percent widowed, divorced, and separated"
-4-13,fhhXX,p_female_headed_families,% female-headed families with children,percentage of female-headed families with children
+﻿seq,code,variable,short_name
+01-001,B02001_003E,% black,% black
+01-002,B02001_002E,% white,% white
+01-003,B03001_003E,% Hispanic,% Hispanic
+01-004,B02001_005E,% Asian,% Asian
+01-005,B02001_004E,% American Indian and Alaska Native alone,% American Indian and Alaska Native
+01-006,B02001_006E,% Native Hawaiian and other Pacific Islander alone,% Native Hawaiian and PI
+01-008,B05002_013E,% foreign born,% foreign born
+01-009,B05007_014E,% foreign born - europe,% foreign born - europe
+01-010,B05007_027E,% foreign born - asia,% foreign born - asia
+01-011,B05007_040E,% foreign born - latin america,% foreign born - latin america
+02-001,"B01001_003E, B01001_004E, B01001_005E, B01001_006E, B01001_027E, B01001_028E, B01001_029E, B01001_030E",% < 18 years old,% < 18 years old
+02-002,"B01001_018E, B01001_019E, B01001_020E, B01001_021E, B01001_022E, B01001_023E, B01001_024E, B01001_025E, B01001_042E, B01001_043E, B01001_044E, B01001_045E, B01001_046E, B01001_047E, B01001_048E, B01001_049E",% > 60 years old,% > 60 years old
+03-001,B25105_001E,Median monthly housing costs,Median monthly housing costs
+03-002,B06011_001E,Median income in the past 12 months,Median income in the past 12 months
+03-003,B19013_001E,Median household income,Median household income
+03-004,B06012_002E,% below poverty,% below poverty
+03-005,B27011_008E,% unemployed,% unemployed
+03-006,"B27011_004E, B27011_009E, B27011_014E",% health insurance,% health insurance
+03-007,"B27011_007E, B27011_012E, B27011_017E",% without health insurance,% without health insurance
+04-001,B06009_005E,% with 4year college degree,% with 4year college degree
+04-002,B06009_002E,% less than high school graduate,% less than high school graduate
+04-003,B06009_003E,% high school graduate (includes equivalency),% high school graduate
+04-004,B06009_004E,% some college or associate's degree,% some college or associate's degree
+04-005,B06009_006E,% graduate or professional degree,% graduate or professional degree
+05-001,"B25034_007E, B25034_008E, B25034_009E, B25034_010E, B25034_011E",% structures more than 30 years old,% structures more than 30 years old
+05-002,"B25026_003E, B25026_004E, B25026_005E,B25026_010E,B25026_011E,B25026_012E",% households moved <10 years ago,% households moved <10 years ago
+05-003,B25003_002E,% owner occupied housing,% owner occupied housing
+05-004,"B11011_005E, B11011_018E",% multiunit structures,% multiunit structures
+05-005,B25002_003E,% vacant housing,% vacant housing
+06-001,B08124_002E,"% management, business, science, and arts occupations","% management, business, science ..."
+06-002,B08124_003E,% service industry,% service industry
+06-003,B08124_004E,% sales and office occupations,% sales and office occupations
+06-004,B08124_005E,"% natural resources, construction, and maintenance occupation","% natural resources, construction ..."
+06-005,B08124_006E,"% production, transportation, and material moving occupations","% production, transportation ..."
+06-006,B08124_007E,% military specific occupations,% military specific occupations
+06-007,B08126_002E,"% agriculture, forestry, fishing and hunting, and mining","% agriculture, forestry, fishing ..."
+06-008,B08126_003E,% construction,% construction
+06-009,B08126_004E,% manufacturing,% manufacturing
+06-010,B08126_005E,% wholesale trade,% wholesale trade
+06-011,B08126_006E,% retail trade,% retail trade
+06-012,B08126_007E,"% transportation and warehousing, and utilities",% transportation and warehousing ...
+06-013,B08126_008E,% information,% information
+06-014,B08126_009E,"% finance and insurance, and real estate and rental and leasing",% finance and insurance ...
+06-015,B08126_010E,"% professional, scientific, and management, and administrative and waste management services","% professional, scientific ..."
+06-016,B08126_011E,"% educational services, and health care and social assistance",% educational services ...
+06-017,B08126_012E,"% arts, entertainment, and recreation, and accommodation and food services","% arts, entertainment, & recreation..."
+06-018,B08126_014E,% public administration,% public administration
+06-019,B08126_015E,% armed forces,% armed forces
+07-001,B08006_002E,"% car, truck, or van","% car, truck, or van"
+07-002,B08006_008E,% public transportation,% public transportation
+07-003,B08006_014E,% bicycle,% bicycle
+07-004,B08006_015E,% walked,% walked
+07-005,"B08006_014E, B08006_015E",% walk or bicycle to work,% walk or bicycle to work
+07-006,B08006_016E,"% taxicab, motorcycle, bicycle, walked, or other means","% taxicab, motorcycle, bicycle, walked"
