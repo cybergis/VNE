@@ -4,9 +4,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>Vulnerable Neighborhood Explorer</title>
 
-	<script src="data/GEO_CONFIG.js"></script>
+	<script src="data/CONFIG.js"></script>
 	<script src="data/GEO_JSON.js"></script>
-	<script src="data/GEO_VARIABLES.js"></script>
+	<script src="data/VARIABLES.js"></script>
 
 	<script
 		src="../template/Neighborhood_Analysis_Mapper/lib/jQuery/jquery-3.3.1.js"></script>
@@ -2820,7 +2820,7 @@ function draw_all_maps() {
 
 	var map_html = '';
 	map_html += '<div>';
-	map_html += '	<div class="map_year" style="margin:0px 100px 0px 0px; height:25px;float:left;"></div>';
+	map_html += '	<div class="map_year" style="margin:0px 0px 0px 0px; height:25px;float:left;"></div>';
 	map_html += '	<div class="map_nPolygon" style="margin:0px 100px 0px 0px; height:25px;float:left;"></div>';
 	map_html += '	<div class="map_fixAxes" style="height:25px;float:left;"></div>';
 	map_html += '</div>';
@@ -2851,7 +2851,8 @@ function draw_all_maps() {
 			if (app.MapWidth.replace('px','') < 500) $("#"+graphC+" .map_nPolygon").hide();
 		}
 	}
-
+	
+	var Proportion_chart_width = 0.7
 	// change height and width for maps and stacked area chart
 	$("#mapContainer").css("height", app.MapHeight.replace('px','')*1+100+'px');
 	$(".mapArea").css("width", app.MapWidth);
@@ -2863,8 +2864,9 @@ function draw_all_maps() {
 	$(".chart").css("height", app.MapHeight.replace('px','')*1 + 'px');
 	$(".chartlegend").css("width", app.MapWidth.replace('px','')*1-10+'px');
 	//alert(app.m);	
-	$("#parcats0").css("width", app.MapWidth.replace('px','')*0.7+10+'px');
-	$("#parcats0 .chart").css("width", app.MapWidth.replace('px','')*0.7-10+'px');
+    $("#parcats0.mapArea").css("width", app.MapWidth.replace('px','')*Proportion_chart_width+10+'px'); ///////////////////////////////////////////////////////////////
+	$("#parcats0").css("width", app.MapWidth.replace('px','')*Proportion_chart_width+10+'px');  
+	$("#parcats0 .chart").css("width", app.MapWidth.replace('px','')*Proportion_chart_width-10+'px');
 	
 /**	
 	if (app.m < 3) {
@@ -3726,7 +3728,7 @@ function drawSubjectBarchart(subjectBarchartD) {
 	// The subject barchart message that appears first time or when the mouse unhovers.
 	// "Click each of the bars to see Tukey's HSD post hoe Test."
 	var html_message = "";
-	html_message += "<span style='color:#0000FF';><i>";
+	html_message += "<span style='color:#3b85f5;font-size: 80%;'><i>";
 	html_message += "Hover your mouse over each of the bars to see Tukey's HSD post hoe Test.";
 	html_message += "</></span>";
 	$("#"+subjectBarchartD+"_legend").html(html_message);
@@ -3738,11 +3740,11 @@ function drawSubjectBarchart(subjectBarchartD) {
 	//html_legend += '  <th><td style="font-size: medium;">&nbsp;</td></th>';
 	html_legend += '  <tr>';
 	html_legend += '    <td style="width:75px;background:#00FFFF">&nbsp;Selected</td>';
-	html_legend += '    <td style="width:15px";></td>';
-	html_legend += '    <td style="width:85px;background:#ff4d00">&nbsp;P < 0.001</td>';
-	html_legend += '    <td style="width:15px";></td>';
+	html_legend += '    <td style="width:8px";></td>';
+	html_legend += '    <td style="width:75px;background:#ff4d00">&nbsp;P < 0.001</td>';
+	html_legend += '    <td style="width:8px";></td>';
 	html_legend += '    <td style="width:75px;background:#ff7400">&nbsp;P < 0.01</td>'; 
-	html_legend += '    <td style="width:15px";></td>';
+	html_legend += '    <td style="width:8px";></td>';
 	html_legend += '    <td style="width:75px;background:#ff9a00">&nbsp;P < 0.05</td>'; 
 	html_legend += '  </tr>';
 	html_legend += '</table>';

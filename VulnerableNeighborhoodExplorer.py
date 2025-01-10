@@ -1,3 +1,6 @@
+# Suppress all warnings
+import warnings
+warnings.filterwarnings("ignore")
 import json, math, copy, sys, re
 from geosnap import Community
 import pandas as pd
@@ -18,23 +21,28 @@ import geopandas as gpd
 import csv
 from IPython.core.display import display, HTML
 from pingouin import pairwise_tukey
-#from jupyter_server  import serverapp
+import ipywidgets as widgets
+from IPython.display import display, HTML
+#This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
+from jupyter_server  import serverapp
+warnings.filterwarnings("ignore")
 
-#Create directory for Visualization    
-#servers = list(serverapp.list_running_servers())
-#servers1 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'view'
-#servers2 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'edit'      
+#Create directory for Visualization. This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment    
+servers = list(serverapp.list_running_servers())
+servers1 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'view'
+servers2 = 'https://cybergisx.cigi.illinois.edu'+servers[0]["base_url"]+ 'edit'      
+
 cwd = os.getcwd()
 prefix_cwd = "/home/jovyan/work"
 cwd = cwd.replace(prefix_cwd, "")
 
 # This is for Jupyter notebbok installed in your PC
-local_dir1 = cwd + '/'
-local_dir2 = cwd + '/'  
+#local_dir1 = cwd + '/'
+#local_dir2 = cwd + '/'  
 
 #This is for CyberGISX. Uncomment two command lines below when you run in CyberGIX Environment
-#local_dir1 = servers1 + cwd + '/'
-#local_dir2 = servers2 + cwd + '/' 
+local_dir1 = servers1 + cwd + '/'
+local_dir2 = servers2 + cwd + '/' 
 
 class ABindex:
     def __init__(self, n):
@@ -100,9 +108,9 @@ def write_INDEX_html(param):
     
     #Replace variables based on the user's selection in each of four files below.
     contents = contents.replace("Vulnerable Neighborhood Explorer", param['title'])
-    contents = contents.replace("data/GEO_CONFIG.js", "data/GEO_CONFIG_"+param['filename_suffix']+".js")
+    contents = contents.replace("data/CONFIG.js", "data/CONFIG_"+param['filename_suffix']+".js")
     contents = contents.replace("data/GEO_JSON.js", "data/GEO_JSON_"+param['filename_suffix']+".js")
-    contents = contents.replace("data/GEO_VARIABLES.js", "data/GEO_VARIABLES_"+param['filename_suffix']+".js")
+    contents = contents.replace("data/VARIABLES.js", "data/VARIABLES_"+param['filename_suffix']+".js")
     
     #write new outfiles: GEO_CONFIG.js GEO_JSON.js VARIABLES.js
     ofile = open(oDir+"/index.html", "w", encoding="utf-8")
@@ -114,7 +122,7 @@ def write_INDEX_html(param):
 def write_GEO_CONFIG_js(param):
     
     # read ACM_GEO_CONFIG.js
-    ifile = open("template/GEO_CONFIG.js", "r")
+    ifile = open("template/CONFIG.js", "r")
     contents = ifile.read()
     
     SubjectName = "";
@@ -129,7 +137,7 @@ def write_GEO_CONFIG_js(param):
     Chord_Diagram_in_neighborhoods = True;
     Zscore_Means_across_Clusters = True;
     Zscore_Means_of_Each_Cluster = True;
-    Number_of_Barcharts_for_Subject_Clusters = 0;
+    Number_of_Column_Charts_for_Subject_Clusters = 0;
     Number_of_BoxPlots_for_Subject_Clusters = 0;
     
     if ('subject' in param): SubjectName =  param['subject']
@@ -144,7 +152,7 @@ def write_GEO_CONFIG_js(param):
     if ('Chord_Diagram_in_neighborhoods' in param): Chord_Diagram_in_neighborhoods =  param['Chord_Diagram_in_neighborhoods']
     if ('Zscore_Means_across_Clusters' in param): Zscore_Means_across_Clusters =  param['Zscore_Means_across_Clusters']
     if ('Zscore_Means_of_Each_Cluster' in param): Zscore_Means_of_Each_Cluster =  param['Zscore_Means_of_Each_Cluster']
-    if ('Number_of_Barcharts_for_Subject_Clusters' in param): Number_of_Barcharts_for_Subject_Clusters =  param['Number_of_Barcharts_for_Subject_Clusters']
+    if ('Number_of_Column_Charts_for_Subject_Clusters' in param): Number_of_Column_Charts_for_Subject_Clusters =  param['Number_of_Column_Charts_for_Subject_Clusters']
     if ('Number_of_BoxPlots_for_Subject_Clusters' in param): Number_of_BoxPlots_for_Subject_Clusters =  param['Number_of_BoxPlots_for_Subject_Clusters']
     
     # perpare parameters
@@ -202,7 +210,7 @@ def write_GEO_CONFIG_js(param):
     Chord_Diagram_in_neighborhoods = "var Chord_Diagram_in_neighborhoods = " + json.dumps(Chord_Diagram_in_neighborhoods)+ ";"
     Zscore_Means_across_Clusters = "var Zscore_Means_across_Clusters = " + json.dumps(Zscore_Means_across_Clusters)+ ";"
     Zscore_Means_of_Each_Cluster = "var Zscore_Means_of_Each_Cluster = " + json.dumps(Zscore_Means_of_Each_Cluster)+ ";"
-    Number_of_Barcharts_for_Subject_Clusters = "var Barchart_of_Subject_Clusters = " + str(Number_of_Barcharts_for_Subject_Clusters) + ";"
+    Number_of_Column_Charts_for_Subject_Clusters = "var Barchart_of_Subject_Clusters = " + str(Number_of_Column_Charts_for_Subject_Clusters) + ";"
     Number_of_BoxPlots_for_Subject_Clusters = "var BoxPlot_of_Subject_Clusters = " + str(Number_of_BoxPlots_for_Subject_Clusters) + ";"
     Map_width = 'var Map_width  = "' + Map_width + '";'
     Map_height = 'var Map_height = "' + Map_height + '";'
@@ -221,7 +229,7 @@ def write_GEO_CONFIG_js(param):
     contents = contents.replace("var Chord_Diagram_in_neighborhoods = true;", Chord_Diagram_in_neighborhoods)
     contents = contents.replace("var Zscore_Means_across_Clusters = true;", Zscore_Means_across_Clusters)
     contents = contents.replace("var Zscore_Means_of_Each_Cluster = true;", Zscore_Means_of_Each_Cluster)
-    contents = contents.replace("var Barchart_of_Subject_Clusters = 0;", Number_of_Barcharts_for_Subject_Clusters)
+    contents = contents.replace("var Barchart_of_Subject_Clusters = 0;", Number_of_Column_Charts_for_Subject_Clusters)
     contents = contents.replace("var BoxPlot_of_Subject_Clusters = 0;", Number_of_BoxPlots_for_Subject_Clusters)
     contents = contents.replace('var Map_width  = "400px";', Map_width)
     contents = contents.replace('var Map_height = "400px";', Map_height)
@@ -230,7 +238,7 @@ def write_GEO_CONFIG_js(param):
     oDir = 'VNE_' + param['filename_suffix']
  
     #Write output including the replacement above
-    filename_GEO_CONFIG = oDir + "/data/GEO_CONFIG_"+param['filename_suffix']+".js"
+    filename_GEO_CONFIG = oDir + "/data/CONFIG_"+param['filename_suffix']+".js"
     ofile = open(filename_GEO_CONFIG, 'w')
     ofile.write(contents)
     ofile.close()
@@ -552,7 +560,7 @@ def write_GEO_VARIABLES_js(community, param):
     
     
     # write df_pivot to GEO_VARIABLES.js
-    filename_GEO_VARIABLES = "VNE_" + param['filename_suffix'] + "/data/GEO_VARIABLES_"+param['filename_suffix']+".js"
+    filename_GEO_VARIABLES = "VNE_" + param['filename_suffix'] + "/data/VARIABLES_"+param['filename_suffix']+".js"
     geoVariablesList = []
     ofile = open(filename_GEO_VARIABLES, 'w')
     ofile.write('var GEO_VARIABLES =\n')
@@ -651,7 +659,7 @@ def write_GEO_VARIABLES_js(community, param):
         #print(df_geoVariables)
     '''
     filename_GEO_VARIABLES_CSV = "VNE_" + param['filename_suffix'] + "/data/CSV_VARIABLES_"+param['filename_suffix']+".csv"
-    df_geoVariables.to_csv(filename_GEO_VARIABLES_CSV, index=False)
+    #df_geoVariables.to_csv(filename_GEO_VARIABLES_CSV, index=False)
     #print(df_geoVariables)
     
     # write zscore to GEO_VARIABLES.js
@@ -689,7 +697,7 @@ def write_GEO_VARIABLES_js(community, param):
     #print(df_geoZscores)
     
     filename_GEO_ZSCORES_CSV = "VNE_" + param['filename_suffix'] + "/data/CSV_ZSCORES_"+param['filename_suffix']+".csv"
-    df_geoZscores.to_csv(filename_GEO_ZSCORES_CSV, index=False)
+    #df_geoZscores.to_csv(filename_GEO_ZSCORES_CSV, index=False)
     
     if (df_disease is not None):
         df_disease = df_disease.reset_index()
@@ -838,7 +846,7 @@ def write_GEO_VARIABLES_js(community, param):
                 df_geoCluster = df_geoCluster.reindex(sorted(df_geoCluster.columns), axis=1)
                 #print(df_geoCluster)
             filename_GEO_ZSCORES_CSV = "VNE_" + param['filename_suffix'] + "/data/CSV_CLUSTER_"+param['filename_suffix']+"_"+str(year)+".csv"
-            df_geoCluster.to_csv(filename_GEO_ZSCORES_CSV, index=False)
+            #df_geoCluster.to_csv(filename_GEO_ZSCORES_CSV, index=False)
             #print(df_geoCluster)
         ofile.write('}\n')
         
@@ -950,8 +958,9 @@ def Vulnerability_log(param):
         #print(param)
         #logs.append({'indexfile': os.path.join(subname, 'index.html'), 'create_at': create_at, 'param': param})
         #logs.append({'indexfile': subname+'/'+'index.html', 'create_at': create_at, 'param': param})
-        logs.append({'indexfile': local_dir1+subname+'/'+'index.html', 'create_at': create_at.isoformat(), 'out_dir': out_dir, 'param': param})
-    logs = sorted(logs, key=lambda k: k['create_at']) 
+        #logs.append({'indexfile': local_dir1+subname+'/'+'index.html', 'create_at': create_at.isoformat(), 'out_dir': out_dir, 'param': param})
+        logs.insert(0, {'indexfile': local_dir1+subname+'/'+'index.html', 'create_at': create_at.isoformat(), 'out_dir': out_dir, 'param': param})
+    logs = sorted(logs, key=lambda k: k['create_at'], reverse=True) 
     #print(logs)
     
     #Write output to log.html
@@ -965,18 +974,18 @@ def Vulnerability_log(param):
     ofile.write('</head>\n')
     ofile.write('<body>\n')
     ofile.write('  <header>\n')
-    ofile.write('    <h1>Logging</h1><p style="color:#6495ED;"><i>*Copy the URL using the button and paste it to your browser to see visualizations you created before.</i></p>\n')
+    ofile.write('    <h1>Logging</h1><p style="color:#6495ED;"><i>*Use the button to copy the URL and paste it into your browser to view the visualizations you created. If the button does not work, you can manually copy the URL from the text box.</i></p>\n')
     ofile.write('  </header>\n')
     
     for idx, val in enumerate(logs):
         params = val['param'].split('\n')
         html = '\n'
-        html += '<div style="margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;">\n'
+        html += '<div style="height:500px; margin:10px; float:left; border: 1px solid #99CCFF; border-radius: 5px;overflow-y: auto;">\n'
         html += '  <table>\n'
         html += '    <tr>\n'
         html += '      <td>\n'
         html += '      <span style="color:#CD5C5C;"><strong>' + str(idx+1) + '. ' + val['out_dir'] + '</strong></span>'
-        html += '        <span style="display: inline-block; width:380px; text-align: right;">' + '<span class="utcToLocal">'+ val['create_at'] + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+        html += '        <span style="display: inline-block; width:400px; text-align:left; margin-left: 100px;">' + '<span class="utcToLocal">'+ val['create_at'] + '</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
         html += '        <input type="text" value=' + val['indexfile']+ ' id="myInput' + str(idx+1) + '">'
         html += '        <button onclick="myFunction' + str(idx+1) + '()">Copy</button></span>\n'  
         html += '      </td>\n'
@@ -1101,16 +1110,301 @@ def Vulnerability_viz(param):
     fname =urllib.parse.quote('index.html')
     template_dir = os.path.join(local_dir1, 'VNE_' + param['filename_suffix'])
     #url = 'file:' + os.path.join(template_dir, fname)
-    url = os.path.join(template_dir, fname)    
+    url = os.path.join(template_dir, fname)
+    Vulnerability_log(param)
     webbrowser.open(url)
     print('To see your visualization, click the URL below (or locate the files):')
     print(url)
     print('To access all visualizations that you have created, click the URL below (or locate the files):')
     print(local_dir1 + 'log.html')    
     print('Advanced options are available in ')  
-    print(local_dir2 + 'VNE_' + param['filename_suffix']+'/data/GEO_CONFIG_' + param['filename_suffix']+'.js')
+    print(local_dir2 + 'VNE_' + param['filename_suffix']+'/data/CONFIG_' + param['filename_suffix']+'.js')
 
 
+def VNE(attribute):
+
+    # Exclude the first two columns for variable selection
+    data = attribute
+    available_variables = data.columns[2:].tolist()
+    
+    # Text input for title
+    title_input = widgets.Text(
+        value="Vulnerable Neighborhood to COVID-19, Chicago",
+        description='Title:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Text input for subject
+    subject_input = widgets.Text(
+        value="COVID-19",
+        description='Subject:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Text input for filename suffix
+    filename_suffix_input = widgets.Text(
+        value="Chicago_kmeans_C5",
+        description='Filename Suffix:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Text input for input CSV path
+    input_csv_input = widgets.Text(
+        value="input_Chicago/ACS_2018_5year__zipcode_Cook_byZipcode_normalized.csv",
+        description='Input CSV:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Function to update variables dynamically based on Input CSV
+    def update_variables(change):
+        global available_variables
+        try:
+            df = pd.read_csv(change['new'])
+            available_variables = df.columns[2:].tolist()
+            variables_listbox.options = available_variables
+        except Exception as e:
+            with output:
+                output.clear_output()
+                print(f"Error updating variables: {e}")
+                
+    # Observe changes in Input CSV
+    input_csv_input.observe(update_variables, names='value')
+    
+    
+    # Text input for shapefile path
+    shapefile_input = widgets.Text(
+        value="input_Chicago/zipcode_Cook_County.shp",
+        description='Shapefile:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Text input for disaster input CSV path
+    disaster_csv_input = widgets.Text(
+        value="input_Chicago/COVID_IL_20200711.csv",
+        description='Disaster CSV:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Text input for rate1
+    rate1_input = widgets.Text(
+        value="Confirmed (%) = _count/_tested",
+        description='Rate Formula:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Text input for normalization CSV
+    normalization_csv_input = widgets.Text(
+        value="input_Chicago/Normalization_Table_Chicago.csv",
+        description='Normalization CSV:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Text input for normalization unit
+    normalization_unit_input = widgets.Text(
+        value="10000",
+        description='Normalization Unit:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Text input for years
+    years_input = widgets.Text(
+        value="2018",
+        description='Years:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Dropdown for method selection
+    method_dropdown = widgets.Dropdown(
+        options=['kmeans', 'affinity_propagation', 'gaussian_mixture', 'spectral', 'ward'],
+        value='kmeans',
+        description='Method:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Dropdown for number of clusters
+    nClusters_dropdown = widgets.Dropdown(
+        options=list(range(31)),  # 0 to 30
+        value=5,
+        description='Number of Clusters:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px')
+    )
+    
+    # Listbox for variables with shift key support
+    variables_listbox = widgets.SelectMultiple(
+        options=available_variables,
+        value=[available_variables[0]],  # Default selection
+        description='Variables:',
+        style={'description_width': 'initial'},
+        layout=widgets.Layout(width='600px', height='340px')
+    )
+    
+    # Label for checkboxes
+    checkbox_label = widgets.Label(
+        value="Select plots to visualize:"
+    )
+    
+    # Checkboxes for boolean parameters
+    Distribution_of_Subject_checkbox = widgets.Checkbox(
+        value=True,
+        description='Distribution of Subject',
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+    )
+    Zscore_Means_across_Clusters_checkbox = widgets.Checkbox(
+        value=True,
+        description='Zscore Means across Clusters',
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+    )
+    Zscore_Means_of_Each_Cluster_checkbox = widgets.Checkbox(
+        value=True,
+        description='Zscore Means of Each Cluster',
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+    )
+    
+    # Dropdown for number of bar charts
+    barcharts_dropdown = widgets.Dropdown(
+        options=list(range(31)),  # 0 to 30
+        value=3,
+        description='Column Charts:',
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+    )
+    
+    # Dropdown for number of box plots
+    boxplots_dropdown = widgets.Dropdown(
+        options=list(range(31)),  # 0 to 30
+        value=0,
+        description='Box Plots:',
+        layout=widgets.Layout(width='400px'),
+        style={'description_width': '160px'},
+    )
+    
+    # Button to run the program
+    run_button = widgets.Button(
+        description="Submit",
+        button_style='success',  # 'success', 'info', 'warning', 'danger' or ''
+        tooltip="Click to run the visualization",
+        icon='play',  # (FontAwesome names without the `fa-` prefix)
+        layout=widgets.Layout(width='300px', height='50px')
+    )
+    
+    # Output widget to capture the result
+    output = widgets.Output()
+    
+    def on_button_click(b):
+        with output:
+            output.clear_output()
+            params = get_inputs()
+            Vulnerability_viz(params)
+    
+    run_button.on_click(on_button_click)
+    
+    # Add an empty line
+    empty_line = widgets.HTML(value="<br>")
+    
+    # Help content
+    help_content = widgets.HTML(
+        value="""
+        <h4>Help Section</h4>
+        <p>Use this interface to configure the parameters for Vulnerability Visualization:</p>
+        <ul>
+            <li><b>Title:</b> Enter a descriptive title for the visualization. Texts will be placed at the top of the result visualization.</li>
+            <li><b>Subject:</b> Specify the subject matter (e.g., COVID-19). Texts will be placed at the top of the maps, column bar charts, and box plots.</li> 
+            <li><b>Filename Suffix:</b> Enter the name of the output folder where your result visualization is saved. It shouldn't contain spaces.</li>
+            <li><b>Input CSV:</b> Provide the path to your input CSV file. The file should include socioeconomic, demographic, and health status data. Ensure that the first column is labeled geoid and the second column is labeled year. All subsequent columns will be available for selection in the Variables input box below.</li>
+            <li><b>Shapefile:</b> Enter the path to the shapefile. A shapefile is used to visualize polygons on the map. The first column header must start with ‘geoid,’ and the code should match the 'geoid' column of another input CSV file that you enter for 'inputCSV' and 'disasterInputCSV’.</li>
+            <li><b>disasterInputCSV:</b> Enter the path to your input CSV file containing data representing the number of disaster-affected people. In the case of COVID-19, the file can contain the number of confirmed cases, COVID-19 testing cases, and deaths. Ensure that the first column is labeled geoid. </li>
+            
+            <li><b>Years:</b> List the years for the analysis. This value should match the second column of the input CSV. It will be displayed at the top of the neighborhood map.</li>
+            <li><b>normalizationCSV:</b> Enter the path to your input CSV file. The first column of the CSV should contain column headers in ‘disasterInputCSV’, and the second column should contain column headers in ‘inputCSV’. For example, if you enter ‘total_count’ in the first column and ‘Population’ in the second column of the same row, it will compute ‘total_count’/’Population’ multiplied by the value entered in the next parameter, ‘normalizationUnit’.</li>
+            <li><b>Normalization Unit:</b> Set the normalization value (e.g., 10000). If you enter the value 10000 here, your cases will be represented per 10000.</li>
+            <li><b>Rate Formula:</b> This feature is primarily designed for analyzing disease-related data. It calculates percentages by utilizing two variables from the 'disasterInputCSV' file. For instance, if the 'disasterInputCSV' contains columns such as 'total_count' (representing the number of confirmed cases of a disease) and 'total_test' (representing the number of individuals tested for the disease), you can specify a formula like 'Confirmed (%) = _count / _test'. This formula will compute the percentage of confirmed cases (e.g., the number of confirmed cases divided by the number of tests conducted, multiplied by 100) and display the result as a new column named 'total_Confirmed (%)' in the visualization. To ensure this computation functions correctly, the column names in the input CSV file assigned to 'disasterInputCSV' must include underscore (_). When you define it like above case, the program identifies variables ending with '_count' and divides them by variables ending with '_test' for the calculation.</li>
+            
+            <li><b>Method:</b> Choose a clustering method from the dropdown.</li>
+            <li><b>Number of Clusters:</b> Enter the number of clusters/neighborhoods you want to create.</li>
+            <li><b>Variables:</b> Select multiple variables by holding down the Ctrl key. They are inputs for your selected clustering method above.</li>
+            <li><b>Distribution of Subject:</b> Distribution chart. A in the figure above. Check to visualize.</li>
+            <li><b>Z-score Means across Clusters:</b> Heatmap chart. K in the figure above. Check to visualize.</li>
+            <li><b>Z-score Means of Each Cluster:</b> Bar chart. L in the figure above. Check to visualize.</li>
+            <li><b>Column Charts:</b> Enter the number of column bar charts to be visualized.</li>
+            <li><b>Box Plots:</b> Enter the number of box plots to be visualized.</li>
+        </ul>
+        <p>Click <b>Submit</b> to run the visualization with the configured parameters.</p>
+        """
+    )
+    
+    # Display the widgets and the button
+    display(widgets.VBox([
+        help_content,  # Help section at the top
+        empty_line, #######################    
+        empty_line, #######################    
+        title_input,
+        subject_input,
+        filename_suffix_input,
+        empty_line, #######################       
+        input_csv_input,
+        shapefile_input,
+        disaster_csv_input,
+        empty_line, ####################### 
+        years_input,
+        normalization_csv_input,
+        normalization_unit_input,
+        rate1_input,
+        empty_line, ####################### 
+        method_dropdown,
+        nClusters_dropdown,
+        empty_line, #######################    
+        variables_listbox,
+        empty_line, #######################
+        checkbox_label,
+        Distribution_of_Subject_checkbox,
+        Zscore_Means_across_Clusters_checkbox,
+        Zscore_Means_of_Each_Cluster_checkbox,
+        barcharts_dropdown,
+        boxplots_dropdown,
+        empty_line, #######################
+        run_button,
+        output
+    ], layout=widgets.Layout(width='100%', border='solid 1px #10A5F5', padding='50px')))
+    
+    # Function to gather inputs when needed
+    def get_inputs():
+        return {
+            'title': title_input.value,
+            'subject': subject_input.value,
+            'filename_suffix': filename_suffix_input.value,
+            'inputCSV': input_csv_input.value,
+            'shapefile': shapefile_input.value,
+            'disasterInputCSV': disaster_csv_input.value,
+            'rate1': rate1_input.value,
+            'normalizationCSV': normalization_csv_input.value,
+            'normalizationUnit': int(normalization_unit_input.value),
+            'years': [int(y.strip()) for y in years_input.value.split(',')],
+            'method': method_dropdown.value,
+            'nClusters': nClusters_dropdown.value,
+            'variables': list(variables_listbox.value),
+            'Distribution_of_Subject': Distribution_of_Subject_checkbox.value,
+            'Zscore_Means_across_Clusters': Zscore_Means_across_Clusters_checkbox.value,
+            'Zscore_Means_of_Each_Cluster': Zscore_Means_of_Each_Cluster_checkbox.value,
+            'Number_of_Column_Charts_for_Subject_Clusters': barcharts_dropdown.value,
+            'Number_of_BoxPlots_for_Subject_Clusters': boxplots_dropdown.value
+        }    
+
+    
 if __name__ == '__main__':
     started_datetime = datetime.now()
     print('VulnerableNeighborhoodExplorer start at %s' % (started_datetime.strftime('%Y-%m-%d %H:%M:%S')))
@@ -1162,7 +1456,7 @@ if __name__ == '__main__':
         'Distribution_of_Subject_different_cluster': False,      # density chart: INC changes by different clusters 
         'Zscore_Means_across_Clusters': True,                   # heatmap: Z Score Means across Clusters
         'Zscore_Means_of_Each_Cluster': False,                  # barchart: Z Score Means of Each Cluster
-        'Number_of_Barcharts_for_Subject_Clusters': 1,
+        'Number_of_Column_Charts_for_Subject_Clusters': 1,
         'Number_of_BoxPlots_for_Subject_Clusters': 1,
     }
 
@@ -1205,7 +1499,7 @@ if __name__ == '__main__':
         'Distribution_of_Subject': True,                   #density chart: INC changes as the map extent changes 
         'Zscore_Means_across_Clusters': True,
         'Zscore_Means_of_Each_Cluster': True,
-        'Number_of_Barcharts_for_Subject_Clusters': 1,
+        'Number_of_Column_Charts_for_Subject_Clusters': 1,
         'Number_of_BoxPlots_for_Subject_Clusters': 1,
     }
 
@@ -1248,7 +1542,7 @@ if __name__ == '__main__':
          'Distribution_of_Subject': True,                   #density chart: INC changes as the map extent changes 
          'Zscore_Means_across_Clusters': True,
          'Zscore_Means_of_Each_Cluster': True,
-         'Number_of_Barcharts_for_Subject_Clusters': 1,
+         'Number_of_Column_Charts_for_Subject_Clusters': 1,
          'Number_of_BoxPlots_for_Subject_Clusters': 1,
     }
 
@@ -1291,7 +1585,7 @@ if __name__ == '__main__':
         'Distribution_of_Subject': True,                   #density chart: INC changes as the map extent changes 
         'Zscore_Means_across_Clusters': True,
         'Zscore_Means_of_Each_Cluster': True,
-        'Number_of_Barcharts_for_Subject_Clusters': 3,
+        'Number_of_Column_Charts_for_Subject_Clusters': 3,
         'Number_of_BoxPlots_for_Subject_Clusters': 3,
     }
 
@@ -1334,7 +1628,7 @@ if __name__ == '__main__':
         'Distribution_of_Subject': True,                   #density chart: INC changes as the map extent changes 
         'Zscore_Means_across_Clusters': True,
         'Zscore_Means_of_Each_Cluster': True,
-        'Number_of_Barcharts_for_Subject_Clusters':3,
+        'Number_of_Column_Charts_for_Subject_Clusters':3,
         'Number_of_BoxPlots_for_Subject_Clusters': 3,	
     }
 
@@ -1377,7 +1671,7 @@ if __name__ == '__main__':
         'Distribution_of_Subject': True,                   #density chart: INC changes as the map extent changes 
         'Zscore_Means_across_Clusters': True,
         'Zscore_Means_of_Each_Cluster': True,
-        'Number_of_Barcharts_for_Subject_Clusters': 3,
+        'Number_of_Column_Charts_for_Subject_Clusters': 3,
         'Number_of_BoxPlots_for_Subject_Clusters': 3,
     }
     
@@ -1420,7 +1714,7 @@ if __name__ == '__main__':
         'Distribution_of_Subject': True,                   #density chart: INC changes as the map extent changes 
         'Zscore_Means_across_Clusters': True,
         'Zscore_Means_of_Each_Cluster': True,
-        'Number_of_Barcharts_for_Subject_Clusters': 1,
+        'Number_of_Column_Charts_for_Subject_Clusters': 1,
         'Number_of_BoxPlots_for_Subject_Clusters': 1,    
     }
     
@@ -1465,7 +1759,7 @@ if __name__ == '__main__':
         'Distribution_of_Subject': True,                   #density chart: INC changes as the map extent changes 
         'Zscore_Means_across_Clusters': True,
         'Zscore_Means_of_Each_Cluster': True,
-        'Number_of_Barcharts_for_Subject_Clusters': 2,
+        'Number_of_Column_Charts_for_Subject_Clusters': 2,
         'Number_of_BoxPlots_for_Subject_Clusters': 2,
     }   
     
